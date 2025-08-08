@@ -53,6 +53,31 @@ conan create --version 1.2.1 zenohc-tmp/prebuilt
 conan create --version 1.2.1 zenohcpp-tmp/from-source
 ```
 
+## Building Zenoh Packages - pico implementation
+
+Zenoh-c library is actually a wrapper over Rust binary.
+To have a pure "C" implementation that is more feasible for embedded and QNX, we need to use
+another Zenoh implementation based on the zenoh-pico library.
+
+```shell
+conan create --version 1.6.0-alpha2 --build=missing up-core-api/release
+conan create --version 1.0.1 --build=missing up-cpp/release
+conan create --version 1.0.0-rc5 zenoh-pico
+conan create --version 1.0.0-rc5 zenoh-cpp
+conan create --version 1.0.0-rc3-pico --build=missing up-transport-zenoh-cpp/release
+```
+**NOTE**: To run the Zenoh transport layer based on zenoh-pico, we need to deploy and run the zenoh-router service first.
+          Please see it below.
+
+## Building Zenoh Router
+```shell
+# Deploy zenoh-router
+conan create --version 1.2.1 zenoh-router
+conan install --requires=zenoh-router/1.2.1 -d=direct_deploy --deployer-folder=<PATH_TO_ZENOHD_STAGE>
+# Run zenoh-router service with proper configuration
+<PATH_TO_ZENOHD_STAGE>/direct_deploy/zenoh-router/zenohd -l "tcp/<HOST_IP>:7447"
+```
+
 ## Running in a clean docker container
 
 ```shell
@@ -110,4 +135,12 @@ conan create -pr:h=tools/profiles/<profile-name> --version=1.14.0 gtest
 # <version-number>: 1.0.0-rc0, 1.0.0, 1.0.1-rc1, 1.0.1
 #
 conan create -pr:h=tools/profiles/<profile-name> --version=1.0.1 --build=missing up-cpp/release
+
+# build zenoh transport layer for QNX
+#
+# <profile-name>: nto-7.1-aarch64-le, nto-7.1-x86_64, nto-8.0-aarch64-le, nto-8.0-x86_64
+#
+conan create -pr:h=tools/profiles/<profile-name> --version 1.0.0-rc5 zenoh-pico
+conan create -pr:h=tools/profiles/<profile-name> --version 1.0.0-rc5 zenoh-cpp
+conan create -pr:h=tools/profiles/<profile-name> --version 1.0.0-rc3-pico --build=missing up-transport-zenoh-cpp/release
 ```
