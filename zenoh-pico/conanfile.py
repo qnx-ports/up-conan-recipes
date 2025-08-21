@@ -44,6 +44,7 @@ class upCoreApiRecipe(ConanFile):
         tc = CMakeToolchain(self)
         tc.cache_variables["BUILD_EXAMPLES"] = False
         tc.cache_variables["BUILD_TESTING"] = False
+        tc.cache_variables["Z_FEATURE_LOCAL_SUBSCRIBER"] = 1
         tc.generate()
 
     def build(self):

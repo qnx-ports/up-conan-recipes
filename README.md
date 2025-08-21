@@ -17,9 +17,16 @@ out and built.
 With Conan 2:
 
 ```shell
-conan create --version 1.6.0-alpha4 --build=missing up-core-api/release/
+conan create --version 1.6.0-alpha2 --build=missing up-core-api/release/
 conan create --version 1.0.1 --build=missing up-cpp/release/
+# build zenoh transport layer based on zenohc-tmp temporary solution
+conan create --version 1.0.0-rc5 zenohc-tmp/prebuilt
+conan create --version 1.0.0-rc5 zenohcpp-tmp/from-source
 conan create --version 1.0.0-rc3 --build=missing up-transport-zenoh-cpp/release/
+# OR build zenoh transport layer based on zenoh-pico backend
+conan create --version 1.0.0-rc5 zenoh-pico
+conan create --version 1.0.0-rc5 -o backend=zenoh-pico zenoh-cpp
+conan create --version 1.0.0-rc3 -o backend=zenoh-pico up-transport-zenoh-cpp/release
 ```
 
 ## Building Developer Packages
@@ -31,7 +38,9 @@ With Conan 2:
 
 ```shell
 conan create --version 1.6.1-dev --build=missing up-core-api/developer/
-conan create --version 1.1.0-dev --build=missing up-cpp/developer/
+conan create --version 1.1.0-dev --build=missing up-cpp/developer/ -o commitish=94ec934097e4a2781943a3dd5c0071c1d16cbbaa
+conan create --version 1.4.0 zenohc-tmp/prebuilt
+conan create --version 1.4.0 zenohcpp-tmp/from-source
 conan create --version 1.0.0-dev --build=missing up-transport-zenoh-cpp/developer/
 conan create --version 1.0.0-dev --build=missing up-transport-socket-cpp/developer/
 ```
@@ -49,31 +58,36 @@ At time of writing, conan packages were not available for zenoh-c and zenoh-cpp.
 They are prerequisites for the up-transport-zenoh-cpp packages. With Conan 2:
 
 ```shell
-conan create --version 1.2.1 zenohc-tmp/prebuilt
-conan create --version 1.2.1 zenohcpp-tmp/from-source
+conan create --version 1.4.0 zenohc-tmp/prebuilt
+conan create --version 1.4.0 zenohcpp-tmp/from-source
 ```
 
-## Building Zenoh Packages - pico implementation
+## Building Zenoh Packages - with proper zenoh-c backend
+
+```shell
+conan create --version 1.4.0 zenoh-c/prebuilt
+conan create --version 1.4.0 zenoh-cpp -o backend=zenoh-c
+```
+
+## Building Zenoh Packages - with proper zenoh-pico backend
 
 Zenoh-c library is actually a wrapper over Rust binary.
 To have a pure "C" implementation that is more feasible for embedded and QNX, we need to use
-another Zenoh implementation based on the zenoh-pico library.
+another Zenoh implementation based on the zenoh-pico backend.
 
 ```shell
-conan create --version 1.6.0-alpha2 --build=missing up-core-api/release
-conan create --version 1.0.1 --build=missing up-cpp/release
-conan create --version 1.0.0-rc5 zenoh-pico
-conan create --version 1.0.0-rc5 zenoh-cpp
-conan create --version 1.0.0-rc3-pico --build=missing up-transport-zenoh-cpp/release
+conan create --version 1.4.0 zenoh-pico
+conan create --version 1.4.0 zenoh-cpp -o backend=zenoh-pico
 ```
-**NOTE**: To run the Zenoh transport layer based on zenoh-pico, we need to deploy and run the zenoh-router service first.
+**NOTE**: To run the Zenoh transport layer based on zenoh-pico backend,
+          we need to deploy and run the zenoh-router service first.
           Please see it below.
 
 ## Building Zenoh Router
 ```shell
 # Deploy zenoh-router
-conan create --version 1.2.1 zenoh-router
-conan install --requires=zenoh-router/1.2.1 -d=direct_deploy --deployer-folder=<PATH_TO_ZENOHD_STAGE>
+conan create --version 1.4.0 zenoh-router/prebuilt
+conan install --requires=zenoh-router/1.4.0 -d=direct_deploy --deployer-folder=<PATH_TO_ZENOHD_STAGE>
 # Run zenoh-router service with proper configuration
 <PATH_TO_ZENOHD_STAGE>/direct_deploy/zenoh-router/zenohd -l "tcp/<HOST_IP>:7447"
 ```
@@ -111,36 +125,13 @@ conan config install tools/qnx-8.0-extension/settings_user.yml
 # build protobuf for QNX
 #
 # <profile-name> could be one of: nto-7.1-aarch64-le, nto-7.1-x86_64, nto-8.0-aarch64-le, nto-8.0-x86_64
-# <version-number>: 3.15.0, 3.21.12, 5.27.2
 #
-conan create -pr:h=tools/profiles/<profile-name> --version=3.21.12 --build=missing protobuf
-
-# build up-core-api for QNX
-#
-# <profile-name>: nto-7.1-aarch64-le, nto-7.1-x86_64, nto-8.0-aarch64-le, nto-8.0-x86_64
-# <version-number>: 1.6.0-alpha2, 1.6.0-alpha3, 1.6.0-alpha4
-#
-conan create -pr:h=tools/profiles/<profile-name> --version=1.6.0-alpha2 up-core-api/release/
-
-# build gtest for QNX
-#
-# <profile-name>: nto-7.1-aarch64-le, nto-7.1-x86_64, nto-8.0-aarch64-le, nto-8.0-x86_64
-# <version-number>: 1.10.0, 1.13.0, 1.14.0
-#
-conan create -pr:h=tools/profiles/<profile-name> --version=1.14.0 gtest
-
-# build up-cpp for QNX
-#
-# <profile-name>: nto-7.1-aarch64-le, nto-7.1-x86_64, nto-8.0-aarch64-le, nto-8.0-x86_64
-# <version-number>: 1.0.0-rc0, 1.0.0, 1.0.1-rc1, 1.0.1
-#
-conan create -pr:h=tools/profiles/<profile-name> --version=1.0.1 --build=missing up-cpp/release
-
-# build zenoh transport layer for QNX
-#
-# <profile-name>: nto-7.1-aarch64-le, nto-7.1-x86_64, nto-8.0-aarch64-le, nto-8.0-x86_64
-#
-conan create -pr:h=tools/profiles/<profile-name> --version 1.0.0-rc5 zenoh-pico
-conan create -pr:h=tools/profiles/<profile-name> --version 1.0.0-rc5 zenoh-cpp
-conan create -pr:h=tools/profiles/<profile-name> --version 1.0.0-rc3-pico --build=missing up-transport-zenoh-cpp/release
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=3.21.12 --build=missing protobuf
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.6.0-alpha2 up-core-api/release/
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.14.0 gtest
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.0.1 --build=missing up-cpp/release
+# build zenoh transport layer for QNX on pico backend
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version 1.0.0-rc5 zenoh-pico
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version 1.0.0-rc5 -o backend=zenoh-pico zenoh-cpp
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version 1.0.0-rc3 -o backend=zenoh-pico --build=missing up-transport-zenoh-cpp/release
 ```
