@@ -108,13 +108,13 @@ jobs:
         shell: bash
         run: |
           conan create --version 1.0.0-rc5 zenohc-tmp/prebuilt
-          conan create --version 1.2.1 zenohc-tmp/prebuilt
+          conan create --version 1.4.0 zenohc-tmp/prebuilt
 
       - name: Build zenohcpp conan package
         shell: bash
         run: |
           conan create --version 1.0.0-rc5 zenohcpp-tmp/from-source
-          conan create --version 1.2.1 zenohcpp-tmp/from-source
+          conan create --version 1.4.0 zenohcpp-tmp/from-source
 
       - name: Build up-transport-zenoh-cpp conan package
         shell: bash
