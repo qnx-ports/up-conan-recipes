@@ -38,7 +38,7 @@ With Conan 2:
 
 ```shell
 conan create --version 1.6.1-dev --build=missing up-core-api/developer/
-conan create --version 1.1.0-dev --build=missing up-cpp/developer/ -o commitish=94ec934097e4a2781943a3dd5c0071c1d16cbbaa
+conan create --version 1.1.0-dev --build=missing up-cpp/developer/
 conan create --version 1.4.0 zenohc-tmp/prebuilt
 conan create --version 1.4.0 zenohcpp-tmp/from-source
 conan create --version 1.0.0-dev --build=missing up-transport-zenoh-cpp/developer/
