@@ -46,7 +46,7 @@
     sha256: "c8583490c74d48bd9dc4f76d686a8203920ad045a1bcafa45e509184153d9b73"
   requirements:
     up-cpp: "1.0.1"
-    up-core-api: "1.6.0-alpha2"
+    up-core-api: "1.6.0-alpha4"
     spdlog: "1.13.0"
     protobuf: "3.21.12"
   test-requirements:

@@ -17,7 +17,7 @@ out and built.
 With Conan 2:
 
 ```shell
-conan create --version 1.6.0-alpha2 --build=missing up-core-api/release/
+conan create --version 1.6.0-alpha4 --build=missing up-core-api/release/
 conan create --version 1.0.1 --build=missing up-cpp/release/
 # build zenoh transport layer based on zenohc-tmp temporary solution
 conan create --version 1.0.0-rc5 zenohc-tmp/prebuilt
@@ -42,7 +42,7 @@ conan create --version 1.1.0-dev --build=missing up-cpp/developer/
 conan create --version 1.5.0 zenohc-tmp/prebuilt
 conan create --version 1.5.0 zenohcpp-tmp/from-source
 conan create --version 1.0.0-dev --build=missing up-transport-zenoh-cpp/developer/
-conan create --version 1.0.0-dev --build=missing up-transport-socket-cpp/developer/
+#conan create --version 1.0.0-dev --build=missing up-transport-socket-cpp/developer/
 ```
 
 Note that developer recipes will generally only support recent commits in a
@@ -127,7 +127,7 @@ conan config install tools/qnx-8.0-extension/settings_user.yml
 # <profile-name> could be one of: nto-7.1-aarch64-le, nto-7.1-x86_64, nto-8.0-aarch64-le, nto-8.0-x86_64
 #
 conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=3.21.12 --build=missing protobuf
-conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.6.0-alpha2 up-core-api/release/
+conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.6.0-alpha4 up-core-api/release/
 conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.14.0 gtest
 conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.0.1 --build=missing up-cpp/release
 # build zenoh transport layer for QNX on pico backend
