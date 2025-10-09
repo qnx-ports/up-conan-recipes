@@ -39,8 +39,8 @@ With Conan 2:
 ```shell
 conan create --version 1.6.1-dev --build=missing up-core-api/developer/
 conan create --version 1.1.0-dev --build=missing up-cpp/developer/
-conan create --version 1.4.0 zenohc-tmp/prebuilt
-conan create --version 1.4.0 zenohcpp-tmp/from-source
+conan create --version 1.5.0 zenohc-tmp/prebuilt
+conan create --version 1.5.0 zenohcpp-tmp/from-source
 conan create --version 1.0.0-dev --build=missing up-transport-zenoh-cpp/developer/
 conan create --version 1.0.0-dev --build=missing up-transport-socket-cpp/developer/
 ```
@@ -58,15 +58,15 @@ At time of writing, conan packages were not available for zenoh-c and zenoh-cpp.
 They are prerequisites for the up-transport-zenoh-cpp packages. With Conan 2:
 
 ```shell
-conan create --version 1.4.0 zenohc-tmp/prebuilt
-conan create --version 1.4.0 zenohcpp-tmp/from-source
+conan create --version 1.5.0 zenohc-tmp/prebuilt
+conan create --version 1.5.0 zenohcpp-tmp/from-source
 ```
 
 ## Building Zenoh Packages - with proper zenoh-c backend
 
 ```shell
-conan create --version 1.4.0 zenoh-c/prebuilt
-conan create --version 1.4.0 zenoh-cpp -o backend=zenoh-c
+conan create --version 1.5.0 zenoh-c/prebuilt
+conan create --version 1.5.0 zenoh-cpp -o backend=zenoh-c
 ```
 
 ## Building Zenoh Packages - with proper zenoh-pico backend
@@ -76,8 +76,8 @@ To have a pure "C" implementation that is more feasible for embedded and QNX, we
 another Zenoh implementation based on the zenoh-pico backend.
 
 ```shell
-conan create --version 1.4.0 zenoh-pico
-conan create --version 1.4.0 zenoh-cpp -o backend=zenoh-pico
+conan create --version 1.5.0 zenoh-pico
+conan create --version 1.5.0 zenoh-cpp -o backend=zenoh-pico
 ```
 **NOTE**: To run the Zenoh transport layer based on zenoh-pico backend,
           we need to deploy and run the zenoh-router service first.
@@ -86,8 +86,8 @@ conan create --version 1.4.0 zenoh-cpp -o backend=zenoh-pico
 ## Building Zenoh Router
 ```shell
 # Deploy zenoh-router
-conan create --version 1.4.0 zenoh-router/prebuilt
-conan install --requires=zenoh-router/1.4.0 -d=direct_deploy --deployer-folder=<PATH_TO_ZENOHD_STAGE>
+conan create --version 1.5.0 zenoh-router/prebuilt
+conan install --requires=zenoh-router/1.5.0 -d=direct_deploy --deployer-folder=<PATH_TO_ZENOHD_STAGE>
 # Run zenoh-router service with proper configuration
 <PATH_TO_ZENOHD_STAGE>/direct_deploy/zenoh-router/zenohd -l "tcp/<HOST_IP>:7447"
 ```
