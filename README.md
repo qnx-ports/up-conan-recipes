@@ -81,7 +81,7 @@ conan create --version 1.5.0 zenoh-cpp -o backend=zenoh-pico
 ```
 **NOTE**: To run the Zenoh transport layer based on zenoh-pico backend,
           we need to deploy and run the zenoh-router service first.
-          Please see it below.
+          Please see below for details on how to do this.
 
 ## Building Zenoh Router
 ```shell
