@@ -134,4 +134,3 @@ conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version=1.0.1 --build=missing
 conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version 1.0.0-rc5 zenoh-pico
 conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version 1.0.0-rc5 -o backend=zenoh-pico zenoh-cpp
 conan create -pr:h=tools/profiles/nto-8.0-x86_64 --version 1.0.0-rc3 -o backend=zenoh-pico --build=missing up-transport-zenoh-cpp/release
-```
