@@ -69,7 +69,7 @@ conan create --version 1.5.0 zenoh-c/prebuilt
 conan create --version 1.5.0 zenoh-cpp -o backend=zenoh-c
 ```
 
-## Building Zenoh Packages - with proper zenoh-pico backend
+## Building Zenoh Packages - with zenoh-pico backend
 
 Zenoh-c library is actually a wrapper over Rust binary.
 To have a pure "C" implementation that is more feasible for embedded and QNX, we need to use
