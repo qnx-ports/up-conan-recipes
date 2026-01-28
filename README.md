@@ -62,7 +62,7 @@ conan create --version 1.5.0 zenohc-tmp/prebuilt
 conan create --version 1.5.0 zenohcpp-tmp/from-source
 ```
 
-## Building Zenoh Packages - with proper zenoh-c backend
+## Building Zenoh Packages - with zenoh-c backend
 
 ```shell
 conan create --version 1.5.0 zenoh-c/prebuilt
