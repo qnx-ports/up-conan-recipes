@@ -32,9 +32,9 @@ jobs:
       - name: Build up-core-api conan package
         shell: bash
         run: |
-          conan create --version 1.6.0-alpha2 up-core-api/release
-          conan create --version 1.6.0-alpha3 up-core-api/release
-          conan create --version 1.6.0-alpha4 up-core-api/release
+          conan create --version 1.6.0-alpha2 up-core-api/release --build=missing
+          conan create --version 1.6.0-alpha3 up-core-api/release --build=missing
+          conan create --version 1.6.0-alpha4 up-core-api/release --build=missing
 
       - name: Build up-cpp conan package
         shell: bash
@@ -97,7 +97,7 @@ jobs:
       - name: Build up-core-api conan package
         shell: bash
         run: |
-          conan create --version 1.6.1-dev up-core-api/developer
+          conan create --version 1.6.1-dev up-core-api/developer --build=missing
 
       - name: Build up-cpp conan package
         shell: bash
